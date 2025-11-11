@@ -1,0 +1,26 @@
+<div class="container-fluid p-0 user-container">
+    <app-user-navbar></app-user-navbar>
+    <div class="container my-5">
+           <table class="table table-stripped table-bordered w-100">
+      <thead>
+        <tr class="text-center">
+          <th scope="col">ID</th>
+          <th scope="col">Title</th>
+          <th scope="col">Description</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of userData" class="text-center">
+          <th scope="row">{{ data.id }}</th>
+          <td class="text-center">{{ data.title }}</td>
+          <td class="text-center">{{ data.description }}</td>
+          <td class="d-flex flex-row justify-content-center">
+            <button class="btn btn-sm btn-edit mx-2" (click)="onEdit(data.id)">Edit</button>
+            <button class="btn btn-sm btn-delete" (click)="onDelete(data.id)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+</div>

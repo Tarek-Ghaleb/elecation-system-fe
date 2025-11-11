@@ -1,0 +1,217 @@
+<div class="d-flex flex-column sidebar-container">
+  <div [ngClass]="{
+      'logo-img-container-en': lang == 'en',
+      'logo-img-container-ar': lang == 'ar'
+    }">
+     <div style="text-align: start">
+        <img
+          *ngIf="lang == 'ar'"
+          src="assets/images/navbar/en-icon.png"
+          width="30px"
+          style="cursor: pointer"
+          (click)="changeLanguage('en')"
+        />
+        <img
+          *ngIf="lang == 'en'"
+          src="assets/images/navbar/ar-icon.png"
+          width="30px"
+          style="cursor: pointer"
+          (click)="changeLanguage('ar')"
+        />
+      </div>
+    <img src="assets/images/login/Future_Watan.png" class="login-brand my-2" alt="brand" width="30%"/>
+  </div>
+  <div class="sidebar-main-container">
+    <div class="sidebar-content-container sidebar-scroll-container">
+      <div class="sidebar-section-title">
+        <h3 [ngClass]="{
+            'main-title-en': lang == 'en',
+            'main-title-ar': lang == 'ar'
+          }">
+          {{ "adminsidebar.mainTitle" | translate }}
+        </h3>
+      </div>
+        <li class="list-group-item sidebar-item" (click)="navigateToPage('admin/home')" [ngStyle]="{
+                    'background': getBackground([
+                    'admin/home']),
+                  }">
+                  <svg [attr.fill]="getIconColor(['admin/home'])" xmlns="http://www.w3.org/2000/svg"
+                    width="20" height="20" fill="currentColor" class="bi bi-clipboard2-data" viewBox="0 0 16 16">
+                    <path
+                      d="M9.5 0a.5.5 0 0 1 .5.5.5.5 0 0 0 .5.5.5.5 0 0 1 .5.5V2a.5.5 0 0 1-.5.5h-5A.5.5 0 0 1 5 2v-.5a.5.5 0 0 1 .5-.5.5.5 0 0 0 .5-.5.5.5 0 0 1 .5-.5z" />
+                    <path
+                      d="M3 2.5a.5.5 0 0 1 .5-.5H4a.5.5 0 0 0 0-1h-.5A1.5 1.5 0 0 0 2 2.5v12A1.5 1.5 0 0 0 3.5 16h9a1.5 1.5 0 0 0 1.5-1.5v-12A1.5 1.5 0 0 0 12.5 1H12a.5.5 0 0 0 0 1h.5a.5.5 0 0 1 .5.5v12a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5z" />
+                    <path
+                      d="M10 7a1 1 0 1 1 2 0v5a1 1 0 1 1-2 0zm-6 4a1 1 0 1 1 2 0v1a1 1 0 1 1-2 0zm4-3a1 1 0 0 0-1 1v3a1 1 0 1 0 2 0V9a1 1 0 0 0-1-1" />
+                  </svg>
+
+                  <p class="list-group-item-text mx-1" [ngStyle]="{
+                'color': getIconColor([
+                         'admin/home'
+                       ]),
+              }">
+                    {{ "admin.mainPage" | translate }}
+                  </p>
+                </li>
+      <!-- Dashboard Accordion -->
+      <div class="accordion dashboard-accordion mt-3" id="dashboardAccordion">
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingDashboard">
+            <button class="accordion-button fw-medium d-flex justify-content-between align-items-center"
+              [class.collapsed]="!isDashboardAccordionExpanded" type="button" data-bs-toggle="collapse"
+              data-bs-target="#collapseDashboard" [attr.aria-expanded]="isDashboardAccordionExpanded"
+              aria-controls="collapseDashboard">
+              <div class="d-flex flex-row w-75">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor"
+                  class="bi bi-gear item-icon" viewBox="0 0 16 16">
+                  <path
+                    d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492M5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0" />
+                  <path
+                    d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115z" />
+                </svg>
+                <div class="d-flex align-items-center mx-2">
+                  <p class="list-group-item-text p-0 m-0">
+                    {{ "adminsidebar.dashboardTitle" | translate }}
+                  </p>
+                </div>
+              </div>
+            </button>
+          </h2>
+          <div id="collapseDashboard" class="accordion-collapse collapse"
+            [ngClass]="{ show: isDashboardAccordionExpanded }">
+            <div class="accordion-body p-0">
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item sidebar-item" (click)="navigateToPage('admin/main-points')" [ngStyle]="{
+                    'background': getBackground([
+                    'admin/main-points']),
+                  }">
+                  <svg [attr.fill]="getIconColor(['admin/main-points'])" xmlns="http://www.w3.org/2000/svg"
+                    width="20" height="20" fill="currentColor" class="bi bi-briefcase" viewBox="0 0 16 16">
+                    <path
+                      d="M6.5 1A1.5 1.5 0 0 0 5 2.5V3H1.5A1.5 1.5 0 0 0 0 4.5v8A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-8A1.5 1.5 0 0 0 14.5 3H11v-.5A1.5 1.5 0 0 0 9.5 1zm0 1h3a.5.5 0 0 1 .5.5V3H6v-.5a.5.5 0 0 1 .5-.5m1.886 6.914L15 7.151V12.5a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5V7.15l6.614 1.764a1.5 1.5 0 0 0 .772 0M1.5 4h13a.5.5 0 0 1 .5.5v1.616L8.129 7.948a.5.5 0 0 1-.258 0L1 6.116V4.5a.5.5 0 0 1 .5-.5" />
+                  </svg>
+
+                  <p class="list-group-item-text mx-1" [ngStyle]="{
+                'color': getIconColor([
+                         'admin/main-points'
+                       ]),
+              }">
+                    {{ "admin.mainPoints" | translate }}
+                  </p>
+                </li>
+                <li class="list-group-item sidebar-item" (click)="navigateToPage('admin/pay-points')" [ngStyle]="{
+                    'background': getBackground([
+                    'admin/pay-points']),
+                  }">
+                  <svg [attr.fill]="getIconColor(['admin/pay-points'])" xmlns="http://www.w3.org/2000/svg"
+                    width="20" height="20" fill="currentColor" class="bi bi-clipboard2-data" viewBox="0 0 16 16">
+                    <path
+                      d="M9.5 0a.5.5 0 0 1 .5.5.5.5 0 0 0 .5.5.5.5 0 0 1 .5.5V2a.5.5 0 0 1-.5.5h-5A.5.5 0 0 1 5 2v-.5a.5.5 0 0 1 .5-.5.5.5 0 0 0 .5-.5.5.5 0 0 1 .5-.5z" />
+                    <path
+                      d="M3 2.5a.5.5 0 0 1 .5-.5H4a.5.5 0 0 0 0-1h-.5A1.5 1.5 0 0 0 2 2.5v12A1.5 1.5 0 0 0 3.5 16h9a1.5 1.5 0 0 0 1.5-1.5v-12A1.5 1.5 0 0 0 12.5 1H12a.5.5 0 0 0 0 1h.5a.5.5 0 0 1 .5.5v12a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5z" />
+                    <path
+                      d="M10 7a1 1 0 1 1 2 0v5a1 1 0 1 1-2 0zm-6 4a1 1 0 1 1 2 0v1a1 1 0 1 1-2 0zm4-3a1 1 0 0 0-1 1v3a1 1 0 1 0 2 0V9a1 1 0 0 0-1-1" />
+                  </svg>
+
+                  <p class="list-group-item-text mx-1" [ngStyle]="{
+                'color': getIconColor([
+                         'admin/pay-points'
+                       ]),
+              }">
+                    {{ "admin.payPoints" | translate }}
+                  </p>
+                </li>
+                <li class="list-group-item sidebar-item" (click)="navigateToPage('admin/schools')" [ngStyle]="{
+                    'background': getBackground([
+                    'admin/schools']),
+                  }">
+                  <svg [attr.fill]="getIconColor(['admin/schools'])" xmlns="http://www.w3.org/2000/svg" width="20"
+                    height="20" fill="currentColor" class="bi bi-joystick" viewBox="0 0 16 16">
+                    <path
+                      d="M10 2a2 2 0 0 1-1.5 1.937v5.087c.863.083 1.5.377 1.5.726 0 .414-.895.75-2 .75s-2-.336-2-.75c0-.35.637-.643 1.5-.726V3.937A2 2 0 1 1 10 2" />
+                    <path
+                      d="M0 9.665v1.717a1 1 0 0 0 .553.894l6.553 3.277a2 2 0 0 0 1.788 0l6.553-3.277a1 1 0 0 0 .553-.894V9.665c0-.1-.06-.19-.152-.23L9.5 6.715v.993l5.227 2.178a.125.125 0 0 1 .001.23l-5.94 2.546a2 2 0 0 1-1.576 0l-5.94-2.546a.125.125 0 0 1 .001-.23L6.5 7.708l-.013-.988L.152 9.435a.25.25 0 0 0-.152.23" />
+                  </svg>
+
+                  <p class="list-group-item-text mx-1" [ngStyle]="{
+                'color': getIconColor([
+                         'admin/schools'
+                       ]),
+              }">
+                    {{ "admin.schools" | translate }}
+                  </p>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- User Management Accordion -->
+      <div class="accordion user-management-accordion mt-3" id="userManagementAccordion">
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingUserManagement">
+            <button class="accordion-button fw-medium d-flex justify-content-between align-items-center"
+              [class.collapsed]="!isUserAccordionExpanded" type="button" data-bs-toggle="collapse"
+              data-bs-target="#collapseUserManagement" [attr.aria-expanded]="isUserAccordionExpanded"
+              aria-controls="collapseUserManagement">
+              <div class="d-flex flex-row w-75">
+                <img src="assets/images/sidebar/userManagement.svg" width="22px" />
+                <div class="d-flex align-items-center mx-2">
+                  <p class="list-group-item-text p-0 m-0">
+                    {{ "adminsidebar.usersManagement" | translate }}
+                  </p>
+                </div>
+              </div>
+            </button>
+          </h2>
+
+          <div id="collapseUserManagement" class="accordion-collapse collapse"
+            [ngClass]="{ show: isUserAccordionExpanded }">
+            <div class="accordion-body p-0">
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item sidebar-item" (click)="navigateToPage('admin/users-list')" [ngStyle]="{
+                    'background': getBackground([
+                    'admin/users-list']),
+                  }">
+                  <svg [attr.fill]="getIconColor(['admin/users-list'])" xmlns="http://www.w3.org/2000/svg" width="20"
+                    height="20" fill="currentColor" class="bi bi-person-lines-fill" viewBox="0 0 16 16">
+                    <path
+                      d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m-5 6s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zM11 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5m.5 2.5a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1zm2 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1zm0 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1z" />
+                  </svg>
+                  <p class="list-group-item-text mx-1" [ngStyle]="{
+                'color': getIconColor([
+                         'admin/users-list'
+                       ]),
+              }">
+                    {{ "admin.userList" | translate }}
+                  </p>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ping-img-container">
+   <a (click)="logout()" style="cursor: pointer;">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                class="bi bi-power"
+                viewBox="0 0 16 16"
+              >
+                <path d="M7.5 1v7h1V1z" />
+                <path
+                  d="M3 8.812a5 5 0 0 1 2.578-4.375l-.485-.874A6 6 0 1 0 11 3.616l-.501.865A5 5 0 1 1 3 8.812"
+                />
+              </svg>
+              <span style="color: #808080" class="mx-2">
+                {{ "common.logout" | translate }}</span
+              >
+            </a>
+  </div>
+</div>

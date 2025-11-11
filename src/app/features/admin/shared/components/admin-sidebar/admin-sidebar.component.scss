@@ -1,0 +1,164 @@
+.sidebar-container {
+  background-color: #FFFFFF;
+  text-align: center;
+  position: fixed;
+  min-height: 100vh;
+  width: 20%;
+  background-color: var(--Colors-Neutral-100, #FFF);
+  overflow: hidden;
+  box-shadow: 0px 4px 48px 0px #0000000A;
+}
+
+.logo-img-container-ar {
+  text-align: center;
+  padding: .2rem;
+  border-left: 1px solid #F2F2F2;
+}
+
+.logo-img-container-en {
+  text-align: center;
+  padding: .2rem;
+  border-right: 1px solid #F2F2F2;
+}
+
+.sidebar-main-container {
+  border-top: 1px solid #F2F2F2;
+   max-height: 70vh;
+  overflow-y: auto;
+}
+
+.sidebar-content-container {
+  padding: 1rem;
+}
+
+.main-title-en {
+  color: #333333;
+  text-align: left;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 33.8px;
+}
+
+.main-title-ar {
+  color: #333333;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 33.8px;
+  text-align: right;
+}
+
+.list-group {
+  padding: 0;
+  cursor: pointer;
+}
+
+.list-group-item {
+  display: flex;
+  flex-direction: row;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 12px;
+}
+
+.list-group-item-text {
+  font-size: 14px;
+  color: #666666;
+  align-self: center;
+  margin: 0;
+}
+
+.item-icon {
+  align-items: center;
+  padding: .2rem;
+  width: 22px;
+  height: 22px;
+  cursor: pointer;
+}
+
+.ping-img-container {
+  position: absolute;
+  bottom: 0px;
+  border-top: 1px solid #CCCCCC;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding-top: .7rem;
+  padding-bottom: .7rem;
+}
+
+.produced-text {
+  color: #4D4D4D;
+  font-size: 14px;
+}
+
+.accordion-button {
+  background-color: transparent !important;
+  border: none !important;
+  padding-left: .7rem;
+  padding-right: .7rem;
+}
+
+.accordion-button:not(.collapsed) {
+  color: #062F6D !important;
+  background-color: transparent !important;
+  border: 1px solid red !important;
+}
+
+.accordion-item:first-of-type > .accordion-header .accordion-button {
+  border: none !important;
+}
+
+.accordion-body {
+  max-height: calc(100vh - 270px); /* adjust height if needed */
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 0.25rem;
+}
+
+/* Optional: smooth small scrollbar */
+.accordion-body::-webkit-scrollbar {
+  width: 6px;
+}
+.accordion-body::-webkit-scrollbar-thumb {
+  background-color: #cccccc;
+  border-radius: 4px;
+}
+.accordion-button::after{
+  margin-left: .5rem !important;
+  margin-right: .5rem !important;
+}
+.sidebar-scroll-container {
+  max-height: calc(100vh - 160px); // adjust based on your header/footer height
+  overflow-y: auto;
+  padding-right: 4px;
+
+  scrollbar-width: thin;
+  scrollbar-color: #ccc transparent;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #bbb;
+    border-radius: 4px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+}
+
+.sidebar-section-title {
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #6c757d; // Bootstrap muted gray
+  padding: 12px 16px 4px;
+  letter-spacing: 0.5px;
+}
+

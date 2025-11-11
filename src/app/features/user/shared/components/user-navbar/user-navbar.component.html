@@ -1,0 +1,46 @@
+<div class="navbar-container">
+<div class="row align-items-center px-2">
+  <div class="col-md-2">
+    <img src="assets/images/login/Future_Watan.png" class="login-brand my-2" alt="brand" width="30%"/>
+  </div>
+  <div class="col-md-8">
+
+  </div>
+  <div class="col-md-2 d-flex flex-row text-end">
+    <div style="text-align: start" class="mx-2">
+        <img
+          *ngIf="lang == 'ar'"
+          src="assets/images/navbar/en-icon.png"
+          width="30px"
+          style="cursor: pointer"
+          (click)="changeLanguage('en')"
+        />
+        <img
+          *ngIf="lang == 'en'"
+          src="assets/images/navbar/ar-icon.png"
+          width="30px"
+          style="cursor: pointer"
+          (click)="changeLanguage('ar')"
+        />
+      </div>
+ <a (click)="logout()" style="cursor: pointer;">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                class="bi bi-power"
+                viewBox="0 0 16 16"
+              >
+                <path d="M7.5 1v7h1V1z" />
+                <path
+                  d="M3 8.812a5 5 0 0 1 2.578-4.375l-.485-.874A6 6 0 1 0 11 3.616l-.501.865A5 5 0 1 1 3 8.812"
+                />
+              </svg>
+              <span style="color: #808080" class="mx-2">
+                {{ "common.logout" | translate }}</span
+              >
+            </a>
+  </div>
+</div>
+</div>

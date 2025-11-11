@@ -1,0 +1,109 @@
+/* You can add global styles to this file, and also import other style files */
+@import "bootstrap";
+@import "bootstrap/scss/bootstrap";
+@import "@ng-select/ng-select/themes/default.theme.css";
+@font-face {
+	font-family: "Tajawal";
+	src: local("Tajawal"), url(./assets/fonts/Tajawal-Regular.ttf) format("truetype");
+}
+@font-face {
+	font-family: "Tajawal-Medium";
+	src: local("Tajawal-Medium"), url(./assets/fonts/Tajawal-Medium.ttf) format("truetype");
+}
+
+@font-face {
+	font-family: "Tajawal-Regular";
+	src: local("Tajawal-Regular"), url(./assets/fonts/Tajawal-Regular.ttf) format("truetype");
+}
+
+@font-face {
+	font-family: "Tajawal-Light";
+	src: local("Tajawal-Light"), url(./assets/fonts/Tajawal-Light.ttf) format("truetype");
+}
+
+body{
+    font-family: "Tajawal-Medium";
+}
+.filter-modal{
+    position: absolute;
+    top: 20%;
+    left: 25%;
+    min-width: 40%;
+}
+
+.pagination .page-item.active .page-link{
+	background-color: #062F6D !important;
+	border: 1px solid #062F6D !important;
+	color: white !important;
+  }
+  .page-item:not(:first-child) .page-link{
+	color: #062F6D !important;
+  }
+
+  .input-label{
+    font-size: 16px;
+	font-weight: 500;
+	margin-top: 1rem;
+	color: #1A1A1A;
+	margin-bottom: .5rem;
+	text-align: start !important;
+  }
+
+  .input-form{
+    height: 40px;
+	padding: 12px;
+	font-size: 14px;
+	border: 1px solid #EBEBEB;
+	box-shadow: 0px 0px 40px 0px #1E3C750A;
+    border-radius: 8px;
+  }
+
+  .input-form:focus-visible{
+    height: 40px;
+	padding: 12px;
+	font-size: 14px;
+    border: 1px solid #062F6D !important;
+	box-shadow: 0px 0px 40px 0px #1E3C750A;
+    border-radius: 8px;
+    outline: none !important;
+  }
+
+  .input-form-validation{
+	color: red;
+	font-size: 12px;
+	margin-bottom: .5rem;
+  }
+
+  .save-form-btn{
+	border-radius: var(--Radius-2, 8px);
+    background-color: #062F6D;
+    display: flex;
+    padding: .75rem 4.5rem;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    color: #FFF;
+    border: none;
+  }
+
+  table{
+	width: 98% !important;
+	border: 1px solid #E8EAEF;
+	border-radius: 8px !important;
+	border-collapse: separate !important;  
+    border-spacing: 0;       
+    overflow: hidden;   
+  }
+  th{
+	background-color: #FAFAFA !important;
+	color: #666666 !important;
+	font-size: 16px !important;
+	border-radius: 0px !important;
+  }
+
+  td{
+	text-align: start;
+	font-size: 14px !important;
+	border-radius: 8px 8px 0px 0px !important;
+	padding: .5rem 1.5rem !important;
+  }
