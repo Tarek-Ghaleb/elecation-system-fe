@@ -1,0 +1,30 @@
+<!-- Trigger button -->
+<button class="btn-add" (click)="openModal()">إضافة منطقة جديدة</button>
+
+<!-- Modal -->
+<div class="custom-modal" *ngIf="showModal">
+  <div class="modal-backdrop" (click)="closeModal()"></div>
+  <div class="modal-content" dir="rtl">
+    <h3>إضافة منطقة جديدة</h3>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label>اسم المنطقة</label>
+        <input type="text" formControlName="name" placeholder="أدخل اسم المنطقة" />
+        <div *ngIf="form.get('name')?.touched && form.get('name')?.invalid" class="error">
+          الاسم مطلوب (حد أقصى 200 حرف)
+        </div>
+      </div>
+
+      <div *ngIf="error" class="error">{{ error }}</div>
+
+      <div class="modal-actions">
+        <button type="button" (click)="closeModal()">إلغاء</button>
+        <button type="submit" [disabled]="form.invalid || saving">
+          <span *ngIf="!saving">حفظ</span>
+          <span *ngIf="saving">جارٍ الحفظ...</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -4,6 +4,7 @@ import { Routes } from '@angular/router';
 import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { SharedModule } from '../../shared/shared.module';
 import { AdminHomePage } from './pages/admin-home-page/admin-home-page';
@@ -11,6 +12,7 @@ import { SchoolsPageComponent } from './pages/schools-page/schools-page.componen
 import { PayPointsPageComponent } from './pages/pay-points-page/pay-points-page.component';
 import { MainPointsPageComponent } from './pages/main-points-page/main-points-page.component';
 import { UsersListPageComponent } from './pages/users-list-page/users-list-page.component';
+import { RegionPageComponent } from './pages/region-page/region-page.component';
 
 const routes: Routes = [
   {
@@ -29,14 +31,19 @@ const routes: Routes = [
     path: 'schools',
     component: SchoolsPageComponent,
   },
+   {
+    path: 'areas',
+    component: RegionPageComponent,
+  },
   {
     path: 'users-list',
     component: UsersListPageComponent,
   },
+ 
 ];
 
 @NgModule({
-  declarations: [AdminHomePage, SchoolsPageComponent, PayPointsPageComponent, MainPointsPageComponent, UsersListPageComponent],
+  declarations: [AdminHomePage, SchoolsPageComponent, PayPointsPageComponent, MainPointsPageComponent, UsersListPageComponent,RegionPageComponent],
   imports: [
     CommonModule,
     RouterModule,
@@ -45,6 +52,7 @@ const routes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     SharedModule,
+    NgbPaginationModule
   ],
 })
 export class AdminModule {}

@@ -15,6 +15,8 @@ export class AdminSidebarComponent {
     'admin/main-points',
     'admin/pay-points',
     'admin/schools',
+    'admin/areas',
+
   ];
 
   userRoutes = [

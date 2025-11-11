@@ -1,0 +1,55 @@
+<!-- Simple responsive modal component (no external libs required) -->
+<div class="modal-backdrop" *ngIf="visible" (click)="onCancel()"></div>
+<div class="modal-wrapper" *ngIf="visible" role="dialog" aria-modal="true">
+    <div class="modal-card">
+        <header class="modal-header">
+            <h3>Add New User</h3>
+            <button class="btn-close" (click)="onCancel()" aria-label="Close">✕</button>
+        </header>
+
+
+        <form [formGroup]="form" (ngSubmit)="onSubmit()" class="modal-body">
+            <div class="fields-grid">
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input id="name" type="text" formControlName="name" placeholder="e.g. Tarek Ghaleb" />
+                    <small class="error" *ngIf="form.get('name')?.touched && form.get('name')?.invalid">Required</small>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="user">Username</label>
+                    <input id="user" type="text" formControlName="user" placeholder="e.g. tghaleb" />
+                    <small class="error" *ngIf="form.get('user')?.touched && form.get('user')?.invalid">Required</small>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="role">Role</label>
+                    <select id="role" formControlName="role">
+                        <option value="" disabled>Select role</option>
+                        <option *ngFor="let r of roles" [value]="r">{{ r }}</option>
+                    </select>
+                    <small class="error" *ngIf="form.get('role')?.touched && form.get('role')?.invalid">Required</small>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="region">Region</label>
+                    <select id="region" formControlName="region">
+                        <option value="" disabled>Select region</option>
+                        <option *ngFor="let rg of regions" [value]="rg">{{ rg }}</option>
+                    </select>
+                    <small class="error"
+                        *ngIf="form.get('region')?.touched && form.get('region')?.invalid">Required</small>
+                </div>
+            </div>
+
+
+            <footer class="modal-actions">
+                <button type="button" class="btn btn-secondary" (click)="onCancel()">Cancel</button>
+                <button type="submit" class="btn btn-primary">Save</button>
+            </footer>
+        </form>
+    </div>
+</div>
