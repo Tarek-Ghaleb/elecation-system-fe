@@ -66,3 +66,8 @@ export interface Voter{
   address: string;
 
 }
+
+export interface ExportExcelDTO{
+	rowNumber : number;
+	errorMessage: string;
+}

@@ -5,7 +5,8 @@ import { NgbDateStruct, NgbModal, NgbDatepickerModule, NgbAlertModule } from '@n
 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FailedModalComponent } from '../../../../shared/components/failed-modal/failed-modal.component';
-import { Voter } from '../../../admin/interfaces/admin.interfaces';
+import { ExportExcelDTO, Voter } from '../../../admin/interfaces/admin.interfaces';
+import { ExportToExcelService } from '../../../../core/services/export-to-excel.service';
 
 @Component({
   selector: 'app-home-page',
@@ -25,13 +26,15 @@ export class HomePageComponent implements OnInit {
   closeResult: WritableSignal<string> = signal('');
   pageTitle: string = "";
   mainVoters: Voter[]=[];
+  excelErrors: ExportExcelDTO[]=[];
+
   searchTerm: string = '';
 
   voters: Voter[]=[];
   addForm!: FormGroup;
   model!: NgbDateStruct;
 
-  constructor(private userDataService: UserDataService, private http: HttpService, private _formbuilder: FormBuilder) {
+  constructor(private userDataService: UserDataService, private http: HttpService, private _formbuilder: FormBuilder,private excelService:ExportToExcelService) {
 
 
     this.intlizeForm();
@@ -77,8 +80,10 @@ async submitUpload(modalRef?: any) {
      this.http.post(`Voter/upload-voter`, fd).subscribe(
       (res: any) => {
         debugger;
-        this.mainVoters = res.voters
-        this.refreshCountries();
+        this.excelErrors=res.excelErrors;
+        if(this.excelErrors.length > 0)
+          this.exportErrorData();
+         this.GetAllVoterByOption(this.userDataService.getUserData()['GatherPointId'], 1);
       });
 
     // Replace the following with your actual upload method:
@@ -102,6 +107,20 @@ async submitUpload(modalRef?: any) {
     this.uploadError = 'حدث خطأ أثناء الرفع. حاول مرة أخرى.';
   }
 }
+  exportErrorData() {
+     const exportData = this.excelErrors.map(trip => ({
+      'رقم الصف': trip.rowNumber,
+      'الخطأ عبارة عن': trip.errorMessage,
+
+      
+
+    }));
+
+    
+
+    // Export to Excel
+    this.excelService.exportToExcel(exportData, 'اخطاء الفايل المرفوع');
+  }
 
   triggerFileInput() {
     this.uploadError = null;
