@@ -4,28 +4,104 @@
   </div>
   <div style="width: 80%" class="mt-5 mx-1">
     <div class="d-flex flex-row justify-content-end">
-       <button class="btn btn-add mb-3" (click)="onAdd()">{{"admin.addSchool" | translate}}</button>
+      <button class="btn btn-add mb-3" (click)="open(add)">اضافة مدرسة جديدة</button>
     </div>
-    <table class="table table-stripped table-bordered w-100">
+    <table class="table">
       <thead>
-        <tr class="text-center">
-          <th scope="col">ID</th>
-          <th scope="col">Title</th>
-          <th scope="col">Description</th>
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">ِAddress</th>
+          <th scope="col">Active</th>
           <th scope="col">Actions</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let schools of schools" class="text-center">
-          <th scope="row">{{ schools.id }}</th>
-          <td class="text-center">{{ schools.title }}</td>
-          <td class="text-center">{{ schools.description }}</td>
+        <tr *ngFor="let item of schools">
+          <td class="text-center">{{ item.name }}</td>
+          <td class="text-center">{{ item.address }}</td>
+          <td class="text-center">
+            <div class="form-check form-switch d-flex justify-content-center">
+              <input class="form-check-input" type="checkbox" role="switch" [(ngModel)]="item.isActive"
+                (change)="toggleStatus(item)" />
+            </div>
           <td class="d-flex flex-row justify-content-center">
-            <button class="btn btn-sm btn-edit mx-2" (click)="onEdit(schools.id)">Edit</button>
-            <button class="btn btn-sm btn-delete" (click)="onDelete(schools.id)">Delete</button>
+            <button class="btn btn-sm btn-edit mx-2" (click)="open(edit)">تعديل</button>
+            <button class="btn btn-sm btn-delete" (click)="open(delete)">حذف</button>
           </td>
         </tr>
       </tbody>
     </table>
+    <div class="d-flex justify-content-between p-2">
+      <ngb-pagination [collectionSize]="schools.length" [(page)]="page" [pageSize]="pageSize"
+        (pageChange)="refreshCountries()">
+      </ngb-pagination>
+
+      <select class="form-select" style="width: auto" [(ngModel)]="pageSize" (ngModelChange)="refreshCountries()">
+        <option [ngValue]="2">2 items per page</option>
+        <option [ngValue]="4">4 items per page</option>
+        <option [ngValue]="6">6 items per page</option>
+      </select>
+    </div>
   </div>
 </div>
+
+
+<ng-template #add let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">اضافة مدرسة جديدة</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="addForm">
+      <div class="mb-3" style="direction: rtl;">
+        <label for="name" class="form-label">اسم المدرسة</label>
+        <input type="text" id="name" formControlName="name" class="form-control" placeholder="ادخل اسم المدرسة" />
+        <div *ngIf="addForm.get('name')?.invalid && addForm.get('name')?.touched" class="text-danger mt-1">
+          يجب ادخال اسم المدرسة
+        </div>
+      </div>
+      <div class="mb-3" style="direction: rtl;">
+        <label for="address" class="form-label">عنوان المدرسة</label>
+        <input type="text" id="name" formControlName="address" class="form-control" placeholder="ادخل عنوان المنطقة" />
+        <div *ngIf="addForm.get('address')?.invalid && addForm.get('address')?.touched" class="text-danger mt-1">
+          يجب ادخال عنوان المنطقة
+        </div>
+      </div>
+    
+
+     
+
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary" (click)="submitAdd()">حفظ</button>
+  </div>
+</ng-template>
+
+<ng-template #edit let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Edit Point</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <form>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary" (click)="submitEdit()">Save</button>
+  </div>
+</ng-template>
+
+<ng-template #delete let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Delete Point</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <form>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary" (click)="submitDelete()">Save</button>
+  </div>
+</ng-template>

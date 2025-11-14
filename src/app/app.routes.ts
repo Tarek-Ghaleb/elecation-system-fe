@@ -9,15 +9,15 @@ import { AdminHomePage } from './features/admin/pages/admin-home-page/admin-home
 export const routes: Routes = [
   {
     path: 'admin',
-    // canActivate: [AuthGuard, RoleGuard],
-    // data: { allowedRoles: ['SuperAdmin'] },
+    canActivate: [AuthGuard, RoleGuard],
+    data: { allowedRoles: ['Admin', 'OperationAdmin'] },
     loadChildren: () =>
       import('./features/admin/admin.module').then((m) => m.AdminModule),
   },
    {
     path: 'user',
-    // canActivate: [AuthGuard, RoleGuard],
-    // data: { allowedRoles: ['SuperAdmin'] },
+    canActivate: [AuthGuard, RoleGuard],
+    data: { allowedRoles: ['GatherSupervisor','GatherAgent','SchoolSupervisor','SchoolAgent','PaymentSupervisor','PaymentAgent'] },
     loadChildren: () =>
       import('./features/user/user.module').then((m) => m.UserModule),
   },

@@ -26,7 +26,7 @@ export class LoginPageComponent {
     private router: Router,
     private translate: TranslateService,
     private userData: UserDataService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.buildLoginFormGroup();
@@ -64,7 +64,7 @@ export class LoginPageComponent {
   }
 
   submitLoginForm() {
-    debugger;
+
     this.submitLoader = true;
     let model = {
       userName: this.loginForm.controls['userName'].value,
@@ -73,17 +73,18 @@ export class LoginPageComponent {
     this.http.submitLoginAPI(model).subscribe(
       (res) => {
         this.submitLoader = false;
-        debugger;
+
         if (res?.code == '200' && res?.isSuccess) {
           localStorage.setItem('User', res?.token);
-          if(this.userData.getUserRoles()?.includes('Admin'))
-            this.router.navigate(['admin/home'])
-          !this.userData.getUserRoles()?.includes('SystemAdmin') &&
-          !this.userData.getUserRoles()?.includes('Sales')
-            ? this.router.navigateByUrl('insurance-management/list', {
-                state: { lob: 1 },
-              })
-            : this.router.navigate(['clients/list']);
+          if (this.userData.getUserRoles()?.includes('Admin'))
+            this.router.navigate(['admin/home']);
+          else if (this.userData.getUserRoles()?.includes('Gather'))
+            this.router.navigate(['user']);
+          else if (this.userData.getUserRoles()?.includes('School'))
+            this.router.navigate(['user/schoolUser']);
+          else if (this.userData.getUserRoles()?.includes('Payment'))
+            this.router.navigate(['user/paymentUser']);
+
         } else {
           const modalRef = this.modalService.open(FailedModalComponent, {
             modalDialogClass: 'filter-modal',

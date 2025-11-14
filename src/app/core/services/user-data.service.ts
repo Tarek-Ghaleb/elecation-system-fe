@@ -9,7 +9,6 @@ export class UserDataService {
 
   getUserRoles() {
     try {
-      debugger;
       let token = localStorage.getItem('User');
       if (token != null) {
         const parsedData = jwtDecode<any>(token);
@@ -21,4 +20,46 @@ export class UserDataService {
       return null;
     }
   }
+
+  getUserId(){
+      try {
+      let token = localStorage.getItem('User');
+      if (token != null) {
+        const parsedData = jwtDecode<any>(token);
+        return parsedData['Id'];
+      }
+    } catch (error) {
+      return null;
+    }
+  }
+
+  getUserAreaId(){
+      try {
+    
+      let token = localStorage.getItem('User');
+      if (token != null) {
+      
+        const parsedData = jwtDecode<any>(token);
+        return parsedData['AreaId'];
+      }
+    } catch (error) {
+      return null;
+    }
+  }
+
+  getUserData(){
+     try {
+    
+      let token = localStorage.getItem('User');
+      if (token != null) {
+      
+        const parsedData = jwtDecode<any>(token);
+        return parsedData;
+      }
+    } catch (error) {
+      return null;
+    }
+  }
+
+
 }

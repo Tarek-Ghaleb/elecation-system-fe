@@ -1,21 +1,19 @@
 import { Component, inject, OnInit, signal, TemplateRef, WritableSignal } from '@angular/core';
-import { UserDataService } from '../../../../core/services/user-data.service';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { NgbModal, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { HttpService } from '../../../../core/services/http.service';
-import { NgbDateStruct, NgbModal, NgbDatepickerModule, NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
-
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UserDataService } from '../../../../core/services/user-data.service';
 import { FailedModalComponent } from '../../../../shared/components/failed-modal/failed-modal.component';
 
 @Component({
-  selector: 'app-home-page',
-  templateUrl: './home-page.component.html',
-  styleUrl: './home-page.component.scss'
+  selector: 'app-payment-user-page',
+  templateUrl: './payment-user-page.component.html',
+  styleUrl: './payment-user-page.component.scss'
 })
-export class HomePageComponent implements OnInit {
+export class PaymentUserPageComponent implements OnInit {
   page = 1;
   pageSize = 10;
-  isGather: boolean = false;
- 
+  isPayment: boolean = false;
   private modalService = inject(NgbModal);
   closeResult: WritableSignal<string> = signal('');
   pageTitle: string = "";
@@ -33,14 +31,15 @@ export class HomePageComponent implements OnInit {
 
   }
   ngOnInit(): void {
-    if (this.userDataService.getUserRoles().includes("Gather")) {
-      this.isGather = true;
+    debugger;
+    if (this.userDataService.getUserRoles().includes("Payment")) {
+      this.isPayment = true;
       if (this.userDataService.getUserRoles().includes("Super")) {
-        this.pageTitle = "مدير نقطة حشد";
-        this.GetAllVoterByOption(this.userDataService.getUserData()['GatherPointId'], 1);
+        this.pageTitle = "مدير  نقطة الصرف";
+        this.GetAllVoterByOption(this.userDataService.getUserData()['PaymentId'], 3);
       }
       else {
-        this.pageTitle = "مسئول حشد"
+        this.pageTitle = "مسئول  نقطة الصرف"
 
       }
 
@@ -76,13 +75,7 @@ export class HomePageComponent implements OnInit {
 
   intlizeForm() {
     this.addForm = this._formbuilder.group({
-      fullname: ['', Validators.required],
       nationalId: ['', Validators.required],
-      birthDate: ['', Validators.required],
-      phone: ['', Validators.required],
-      address: [''],
-
-
 
 
     });
@@ -107,20 +100,17 @@ export class HomePageComponent implements OnInit {
   submitAdd() {
     debugger;
     let payload = {
-      fullName: this.addForm.value.fullname,
-      nationalId: this.addForm.value.nationalId,
-      phone: this.addForm.value.phone,
-      birthDate: this.addForm.value.birthDate,
-      address: this.addForm.value.address
+      voterNationalId: this.addForm.value.nationalId,
+      status:3
 
     }
 
-    this.http.post(`Voter/add-new-voter`, payload).subscribe(
+    this.http.put(`Voter/update-voter-trip`, payload).subscribe(
       (res: any) => {
-        // this.GetAllGatherPoints(Number(this.userDataService.getUserAreaId()))
+     
         if (res?.code == '200' && res?.isSuccess) {
            if (this.userDataService.getUserRoles().includes("Super")) {
-          this.GetAllVoterByOption(this.userDataService.getUserData()['GatherPointId'], 1)
+          this.GetAllVoterByOption(this.userDataService.getUserData()['PaymentId'], 3)
           this.refreshCountries();
 
         }
@@ -155,3 +145,4 @@ export class HomePageComponent implements OnInit {
 
   }
 }
+

@@ -13,31 +13,45 @@ import { PayPointsPageComponent } from './pages/pay-points-page/pay-points-page.
 import { MainPointsPageComponent } from './pages/main-points-page/main-points-page.component';
 import { UsersListPageComponent } from './pages/users-list-page/users-list-page.component';
 import { RegionPageComponent } from './pages/region-page/region-page.component';
+import { AuthGuard } from '../../core/guards/auth-guard';
+import { RoleGuard } from '../../core/guards/role-guard';
 
 const routes: Routes = [
   {
     path: 'home',
     component: AdminHomePage,
+     canActivate: [AuthGuard, RoleGuard],
+        data: { allowedRoles: ['Admin', 'OperationAdmin'] },
   },
   {
     path: 'main-points',
     component: MainPointsPageComponent,
+     canActivate: [AuthGuard, RoleGuard],
+    data: { allowedRoles: ['OperationAdmin'] },
   },
   {
     path: 'pay-points',
     component: PayPointsPageComponent,
+     canActivate: [AuthGuard, RoleGuard],
+    data: { allowedRoles: ['OperationAdmin'] },
   },
   {
     path: 'schools',
     component: SchoolsPageComponent,
+     canActivate: [AuthGuard, RoleGuard],
+    data: { allowedRoles: ['OperationAdmin'] },
   },
    {
     path: 'areas',
     component: RegionPageComponent,
+     canActivate: [AuthGuard, RoleGuard],
+    data: { allowedRoles: ['Admin'] },
   },
   {
     path: 'users-list',
     component: UsersListPageComponent,
+     canActivate: [AuthGuard, RoleGuard],
+    data: { allowedRoles: ['Admin', 'OperationAdmin'] },
   },
  
 ];

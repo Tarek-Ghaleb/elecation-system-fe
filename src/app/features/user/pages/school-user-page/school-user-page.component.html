@@ -1,14 +1,12 @@
 <div class="container-fluid p-0 user-container">
   <app-user-navbar></app-user-navbar>
 
-  <div *ngIf="isGather">
+  <div *ngIf="isSchool">
     <div class="container my-5">
 
       <div class="d-flex flex-row justify-content-between">
         <h5 style="direction: rtl;">{{pageTitle}}</h5>
         <div class="d-flex flex-row justify-content-end">
-          <button class="btn btn-add mb-3">رفع فايل</button>
-
           <button class="btn btn-add mb-3" (click)="open(add)">اضافة ناخب جديد</button>
         </div>
 
@@ -46,7 +44,8 @@
         <option [ngValue]="2">2 items per page</option>
         <option [ngValue]="4">4 items per page</option>
         <option [ngValue]="6">6 items per page</option>
-         <option [ngValue]="10">10 items per page</option>
+        <option [ngValue]="10">10 items per page</option>
+
       </select>
     </div>
     </div>
@@ -63,14 +62,7 @@
   </div>
   <div class="modal-body">
     <form [formGroup]="addForm">
-      <div class="mb-3" style="direction: rtl;">
-        <label for="name" class="form-label">اسم الناخب بالكامل</label>
-        <input type="text" id="fullname" formControlName="fullname" class="form-control"
-          placeholder="ادخل اسم الناخب بالكامل" />
-        <div *ngIf="addForm.get('fullname')?.invalid && addForm.get('fullname')?.touched" class="text-danger mt-1">
-          يجب ادخال اسم الناخب بالكامل
-        </div>
-      </div>
+      
 
       <div class="mb-3" style="direction: rtl;">
         <label for="name" class="form-label">الرقم القومى</label>
@@ -81,27 +73,7 @@
         </div>
       </div>
 
-      <div class="mb-3" style="direction: rtl;">
-        <label for="name" class="form-label">رقم الموبايل</label>
-        <input type="text" id="phone" formControlName="phone" class="form-control" placeholder="ادخل الرقم الموبايل" />
-        <div *ngIf="addForm.get('phone')?.invalid && addForm.get('phone')?.touched" class="text-danger mt-1">
-          يجب ادخال رقم الموبايل
-        </div>
-      </div>
-
-      <div class="mb-3" style="direction: rtl;">
-        <label for="name" class="form-label">رقم الموبايل</label>
-        <input type="text" id="address" formControlName="address" class="form-control"
-          placeholder="ادخل الرقم العنوان" />
-
-      </div>
-
-      <div class="mb-3" style="direction: rtl;">
-        <label for="name" class="form-label">تاريخ الميلاد </label>
-
-          <input class="form-control" formControlName="birthDate" placeholder="yyyy-mm-dd" />
-        
-      </div>
+     
 
 
 
