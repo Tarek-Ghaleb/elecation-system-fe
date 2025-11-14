@@ -57,3 +57,12 @@ export interface Role{
 
 
 }
+export interface Voter{
+	id: number;                 // handy for consumers
+  nationalId: string;
+  fullName: string;
+  age: number;
+  phone: string ;
+  address: string;
+
+}

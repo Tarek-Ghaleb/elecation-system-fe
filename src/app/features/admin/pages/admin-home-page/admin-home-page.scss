@@ -1,7 +1,116 @@
+/* Card dashboard layout */
+$page-bg: #fafbfd;
+$card-bg: linear-gradient(180deg, #ffffff, #fbfdff);
+$accent: #062f6d;
+$muted: #6c757d;
+$card-radius: 14px;
+
+.page-with-sidebar {
+  min-height: 100vh;
+  background: $page-bg;
+  display: flex;
+  gap: 1rem;
+  align-items: stretch;
+
+  .sidebar-col {
+    width: 20%;
+    min-width: 220px; /* keeps sidebar usable on narrow screens */
+  }
+
+  .content-col {
+    width: calc(100% - 20%);
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+}
+
+/* make layout stack on small screens */
+@media (max-width: 992px) {
+  .page-with-sidebar {
+    flex-direction: column;
+
+    .sidebar-col {
+      width: 100%;
+      order: 2;
+    }
+    .content-col {
+      width: 100%;
+      order: 1;
+    }
+  }
+}
+
+/* card style */
 .card-container {
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 16px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    padding: 24px;
+  background: $card-bg;
+  border-radius: $card-radius;
+  box-shadow: 0 6px 18px rgba(6, 47, 109, 0.07);
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform .15s ease, box-shadow .15s ease;
+  cursor: default;
+  border: 1px solid rgba(6,47,109,0.04);
+  outline: none;
+
+  &:hover, &:focus {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 30px rgba(6,47,109,0.12);
+  }
+
+  .card-top {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: right;
+  }
+
+  .count {
+    font-size: 2.25rem;
+    font-weight: 700;
+    color: $accent;
+    line-height: 1;
+  }
+
+  .operation {
+    font-size: 1rem;
+    color: $muted;
+    font-weight: 600;
+    opacity: .95;
+  }
+
+  .card-footer {
+    display: flex;
+    justify-content: flex-start; /* aligns the button to left in rtl container it will appear near edge */
+    margin-top: 0.75rem;
+
+    .btn {
+      padding: 0.25rem 0.5rem;
+      font-size: 0.85rem;
+    }
+  }
+}
+
+/* empty state */
+.empty-state {
+  padding: 2rem;
+  border-radius: $card-radius;
+  background: rgba(6,47,109,0.03);
+  text-align: center;
+  color: $muted;
+  font-weight: 600;
+}
+
+/* make the cards full height for equal-height layout */
+.row .d-flex > .card-container {
+  height: 100%;
+}
+
+/* responsive tweaks */
+@media (max-width: 768px) {
+  .card-container {
+    padding: 1rem;
+    .count { font-size: 1.75rem; }
+  }
 }

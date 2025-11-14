@@ -156,7 +156,7 @@ export class UsersListPageComponent implements OnInit {
   onSelectPaymen(payment: any) {
     debugger;
     this.selectedpayment = payment;
-    this.addForm.get('paymentId')?.setValue(payment.id);
+    this.addForm.get('paymedPointId')?.setValue(this.selectedpayment?.id);
   }
 
   onSelectRole(role: any) {
@@ -286,7 +286,7 @@ export class UsersListPageComponent implements OnInit {
       areaId: !this.isAdmin? Number(this.userDataService.getUserAreaId()):this.selectedArea?.id,
       createdUserId: this.userDataService.getUserId(),
       schoolId:this.selectedSchool!=null && this.selectedSchool!=undefined?Number(this.addForm.value.schoolId) : null,
-      paymedPointId:this.selectedpayment!=null && this.selectedpayment!=undefined?Number(this.addForm.value.paymedPointId) : null,
+      paymentPointId:this.selectedpayment!=null && this.selectedpayment!=undefined?Number(this.addForm.value.paymedPointId) : null,
       GatherPointId:this.selectedGatherPoint!=null && this.selectedGatherPoint!=undefined?Number(this.addForm.value.GatherPointId) : null,
 
 

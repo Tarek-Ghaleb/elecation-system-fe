@@ -4,6 +4,7 @@ import { NgbModal, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { HttpService } from '../../../../core/services/http.service';
 import { UserDataService } from '../../../../core/services/user-data.service';
 import { FailedModalComponent } from '../../../../shared/components/failed-modal/failed-modal.component';
+import { Voter } from '../../../admin/interfaces/admin.interfaces';
 
 @Component({
   selector: 'app-payment-user-page',
@@ -17,9 +18,10 @@ export class PaymentUserPageComponent implements OnInit {
   private modalService = inject(NgbModal);
   closeResult: WritableSignal<string> = signal('');
   pageTitle: string = "";
-  mainVoters: any;
+  mainVoters: Voter[]=[];
+   searchTerm: string = '';
 
-  voters: any;
+  voters: Voter[]=[];
   addForm!: FormGroup;
   model!: NgbDateStruct;
 
@@ -30,13 +32,25 @@ export class PaymentUserPageComponent implements OnInit {
 
 
   }
+
+  onSearchChange() {
+    const term = this.searchTerm.trim().toLowerCase();
+
+    if (!term) {
+      // no search: show all
+      this.refreshCountries();
+      return;
+    }
+  }
+
+  
   ngOnInit(): void {
     debugger;
     if (this.userDataService.getUserRoles().includes("Payment")) {
       this.isPayment = true;
       if (this.userDataService.getUserRoles().includes("Super")) {
         this.pageTitle = "مدير  نقطة الصرف";
-        this.GetAllVoterByOption(this.userDataService.getUserData()['PaymentId'], 3);
+        this.GetAllVoterByOption(this.userDataService.getUserData()['PaymentPointId'], 3);
       }
       else {
         this.pageTitle = "مسئول  نقطة الصرف"
@@ -101,7 +115,7 @@ export class PaymentUserPageComponent implements OnInit {
     debugger;
     let payload = {
       voterNationalId: this.addForm.value.nationalId,
-      status:3
+      status:4
 
     }
 

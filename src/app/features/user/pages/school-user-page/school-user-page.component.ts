@@ -22,6 +22,7 @@ export class SchoolUserPageComponent implements OnInit {
   voters: any;
   addForm!: FormGroup;
   model!: NgbDateStruct;
+  searchTerm: string = '';
 
   constructor(private userDataService: UserDataService, private http: HttpService, private _formbuilder: FormBuilder) {
 
@@ -44,9 +45,9 @@ export class SchoolUserPageComponent implements OnInit {
       }
 
     }
-   
+
   }
- 
+
 
   GetAllVoterByOption(operationId: number, operationType: number) {
     debugger;
@@ -101,20 +102,20 @@ export class SchoolUserPageComponent implements OnInit {
     debugger;
     let payload = {
       voterNationalId: this.addForm.value.nationalId,
-      status:3
+      status: 3
 
     }
 
     this.http.put(`Voter/update-voter-trip`, payload).subscribe(
       (res: any) => {
-     
-        if (res?.code == '200' && res?.isSuccess) {
-           if (this.userDataService.getUserRoles().includes("Super")) {
-          this.GetAllVoterByOption(this.userDataService.getUserData()['SchoolId'], 2)
-          this.refreshCountries();
 
-        }
-        this.modalService.dismissAll();
+        if (res?.code == '200' && res?.isSuccess) {
+          if (this.userDataService.getUserRoles().includes("Super")) {
+            this.GetAllVoterByOption(this.userDataService.getUserData()['SchoolId'], 2)
+            this.refreshCountries();
+
+          }
+          this.modalService.dismissAll();
         } else {
           const modalRef = this.modalService.open(FailedModalComponent, {
             modalDialogClass: 'filter-modal',
@@ -144,4 +145,15 @@ export class SchoolUserPageComponent implements OnInit {
   toggleStatus(point: any) {
 
   }
+
+  onSearchChange() {
+    const term = this.searchTerm.trim().toLowerCase();
+
+    if (!term) {
+      // no search: show all
+      this.refreshCountries();
+      return;
+    }
+  }
+
 }

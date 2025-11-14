@@ -1,46 +1,53 @@
-<div class="navbar-container">
-<div class="row align-items-center px-2">
-  <div class="col-md-2">
-    <img src="assets/images/login/Future_Watan.png" class="login-brand my-2" alt="brand" width="30%"/>
-  </div>
-  <div class="col-md-8">
+<div class="navbar-container" dir="rtl" role="navigation" aria-label="Main navigation">
+  <div class="nav-inner container-fluid">
+    <div class="brand-area">
+      <img
+        src="assets/images/login/Future_Watan.png"
+        class="login-brand"
+        alt="brand"
+        loading="lazy"
+      />
+    </div>
 
-  </div>
-  <div class="col-md-2 d-flex flex-row text-end">
-    <div style="text-align: start" class="mx-2">
+    <div class="spacer" aria-hidden="true"></div>
+
+    <div class="actions-area">
+      <button
+        class="lang-btn"
+        type="button"
+        title="Change language"
+        (click)="changeLanguage(lang === 'ar' ? 'en' : 'ar')"
+        aria-label="Change language"
+      >
         <img
-          *ngIf="lang == 'ar'"
+          *ngIf="lang === 'ar'"
           src="assets/images/navbar/en-icon.png"
-          width="30px"
-          style="cursor: pointer"
-          (click)="changeLanguage('en')"
+          alt="English"
+          class="lang-icon"
         />
         <img
-          *ngIf="lang == 'en'"
+          *ngIf="lang === 'en'"
           src="assets/images/navbar/ar-icon.png"
-          width="30px"
-          style="cursor: pointer"
-          (click)="changeLanguage('ar')"
+          alt="Arabic"
+          class="lang-icon"
         />
-      </div>
- <a (click)="logout()" style="cursor: pointer;">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                fill="currentColor"
-                class="bi bi-power"
-                viewBox="0 0 16 16"
-              >
-                <path d="M7.5 1v7h1V1z" />
-                <path
-                  d="M3 8.812a5 5 0 0 1 2.578-4.375l-.485-.874A6 6 0 1 0 11 3.616l-.501.865A5 5 0 1 1 3 8.812"
-                />
-              </svg>
-              <span style="color: #808080" class="mx-2">
-                {{ "common.logout" | translate }}</span
-              >
-            </a>
+      </button>
+
+      <button class="logout-btn" (click)="logout()" type="button" title="{{ 'common.logout' | translate }}" aria-label="Logout">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="18"
+          height="18"
+          fill="currentColor"
+          class="bi bi-power"
+          viewBox="0 0 16 16"
+          aria-hidden="true"
+        >
+          <path d="M7.5 1v7h1V1z" />
+          <path d="M3 8.812a5 5 0 0 1 2.578-4.375l-.485-.874A6 6 0 1 0 11 3.616l-.501.865A5 5 0 1 1 3 8.812" />
+        </svg>
+        <span class="logout-text">{{ "common.logout" | translate }}</span>
+      </button>
+    </div>
   </div>
-</div>
 </div>

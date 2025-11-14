@@ -1,7 +1,156 @@
-.navbar-container{
-    background-color: #f8f9fa;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+.navbar-container {
+  background-color: #ffffff;
+  box-shadow: 0 2px 6px rgba(2, 27, 55, 0.06);
+  width: 100%;
+  border-bottom: 1px solid #e9ecef;
+  /* use min-height instead of fixed vh to be friendlier on small screens */
+  min-height: 64px;
+  display: flex;
+  align-items: center;
+  z-index: 1000;
+
+  .nav-inner {
+    display: flex;
+    align-items: center;
     width: 100%;
-    height: 15vh;
-    border: 1px solid #e0e0e0;
+    gap: 0.75rem;
+    padding: 0.45rem 1rem;
+  }
+
+  .brand-area {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    /* keep brand on the left visually when dir=rtl it's actually start */
+    .login-brand {
+      width: 120px;
+      max-width: 30%;
+      height: auto;
+      object-fit: contain;
+      display: block;
+    }
+  }
+
+  .spacer {
+    flex: 1 1 auto;
+    /* keeps actions on the far side */
+  }
+
+  .actions-area {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    flex-shrink: 0;
+
+    .lang-btn,
+    .logout-btn {
+      background: transparent;
+      border: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.35rem 0.6rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color .12s ease, transform .06s ease;
+    }
+
+    .lang-btn {
+      padding: 0.25rem;
+      min-width: 44px;
+      min-height: 44px;
+      justify-content: center;
+
+      .lang-icon {
+        width: 28px;
+        height: 28px;
+        object-fit: contain;
+        display: block;
+      }
+    }
+
+    .logout-btn {
+      color: #6c757d;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+
+      svg {
+        color: #6c757d;
+      }
+
+      .logout-text {
+        display: inline-block;
+        color: #6c757d;
+        font-size: 0.95rem;
+      }
+    }
+
+    /* hover/focus styles */
+    .lang-btn:hover,
+    .logout-btn:hover {
+      background-color: rgba(6, 47, 109, 0.06);
+      transform: translateY(-1px);
+    }
+
+    .lang-btn:focus,
+    .logout-btn:focus {
+      outline: 2px solid rgba(6,47,109,0.16);
+      outline-offset: 2px;
+    }
+  }
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+  .navbar-container {
+    .nav-inner {
+      padding: 0.5rem;
+    }
+
+    .brand-area {
+      .login-brand {
+        width: 96px;
+      }
+    }
+
+    .actions-area {
+      gap: 0.4rem;
+
+      .logout-btn .logout-text {
+        display: none; /* hide text on small screens to save space, keeps icon */
+      }
+
+      .lang-btn {
+        min-width: 40px;
+        min-height: 40px;
+        .lang-icon {
+          width: 24px;
+          height: 24px;
+        }
+      }
+    }
+  }
+}
+
+/* Very small screens / mobile */
+@media (max-width: 420px) {
+  .navbar-container {
+    .nav-inner {
+      gap: 0.5rem;
+    }
+
+    .brand-area {
+      .login-brand {
+        width: 80px;
+      }
+    }
+
+    .actions-area {
+      .lang-btn, .logout-btn {
+        padding: 0.2rem 0.35rem;
+      }
+    }
+  }
 }
