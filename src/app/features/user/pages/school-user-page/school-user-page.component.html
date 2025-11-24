@@ -1,9 +1,14 @@
+<div class="loading-overlay" *ngIf="isLoading">
+  <div class="loading-inner">
+    <img src="assets/images/shared/blueSpinner2.gif" alt="loading" class="loading-gif" />
+  </div>
+</div>
 <div class="container-fluid p-0 user-container" dir="rtl">
   <app-user-navbar></app-user-navbar>
 
   <div *ngIf="isSchool" class="page-wrapper">
     <div class="page-header container my-4">
-      <h5 class="page-title">{{ pageTitle }}</h5>
+      <h5 class="page-title">{{ pageTitle }} - {{pageName}}</h5>
 
       <div class="header-actions">
         <button class="btn btn-add mb-3" (click)="open(add)">اضافة ناخب جديد</button>
@@ -28,7 +33,11 @@
               <th scope="col">الأسم</th>
               <th scope="col">الرقم القومى</th>
               <th scope="col">رقم الهاتف</th>
-              <th scope="col" class="actions-col">الإجراءات</th>
+              <th scope="col">نقطة الحشد</th>
+              <th scope="col">المدرسة</th>
+              <th scope="col">الحالة</th>
+
+
             </tr>
           </thead>
           <tbody>
@@ -36,13 +45,13 @@
               <td class="align-middle">{{ item.fullName }}</td>
               <td class="align-middle">{{ item.nationalId }}</td>
               <td class="align-middle">{{ item.phone }}</td>
+              <td class="align-middle">{{ item.gatherdName }}</td>
+              <td class="align-middle">{{ item.schoolName }}</td>
+              <td class="align-middle">{{ item.status }}</td>
 
-              <td class="align-middle text-center">
-                <div class="action-buttons">
-                  <button class="btn btn-sm btn-edit" (click)="open(edit)">تعديل</button>
-                  <button class="btn btn-sm btn-delete" (click)="open(delete)">حذف</button>
-                </div>
-              </td>
+
+
+              
             </tr>
           </tbody>
         </table>

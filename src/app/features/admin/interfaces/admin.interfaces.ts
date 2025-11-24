@@ -64,10 +64,25 @@ export interface Voter{
   age: number;
   phone: string ;
   address: string;
+  status:string;
+  committeNo:string;
+  inspectionNo:string;
+  schoolName:string;
+  gatherdName:string;
+  
 
 }
 
 export interface ExportExcelDTO{
 	rowNumber : number;
 	errorMessage: string;
+}
+
+export interface SourceData{
+	schoolName:string,
+	schoolAddress:string;
+	nationalId:string;
+	name:string;
+	committeNo:number;
+	inspectionNo:number;
 }

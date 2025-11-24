@@ -325,3 +325,28 @@
   .upload-zone { min-height: 130px; .plus-circle { width: 60px; height: 60px; font-size: 34px; } }
 }
 
+.loading-overlay {
+  position: fixed;      /* ثابت بالنسبة للنافذة */
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(255,255,255,0.6); /* نصف شفاف - غيّره لو تريد مظلم */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;        /* تأكد أنه أعلى من المودال والسايدبار */
+}
+
+/* صندوق داخلي يمكن استخدامه لوضع حدود/ظل */
+.loading-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* GIF - غيّر الحجم كما تريد */
+.loading-gif {
+  width: 80px;
+  height: 80px;
+}

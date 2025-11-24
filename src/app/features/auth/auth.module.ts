@@ -13,6 +13,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../../shared/shared.module';
 import { AppConfigService } from '../../core/services/app-config.service';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
+import { ChangePasswordModelComponent } from '../../shared/components/change-password-model/change-password-model.component';
 
 const routes: Routes = [
   {
@@ -22,7 +23,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [LoginPageComponent],
+  declarations: [LoginPageComponent, ChangePasswordModelComponent],
   imports: [
     CommonModule,
     TranslateModule,
@@ -35,4 +36,4 @@ const routes: Routes = [
     RouterModule.forChild(routes),
   ],
 })
-export class AuthModule {}
+export class AuthModule { }

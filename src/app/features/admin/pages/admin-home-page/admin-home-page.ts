@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { HttpService } from '../../../../core/services/http.service';
 import { UserDataService } from '../../../../core/services/user-data.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ChangePasswordModelComponent } from '../../../../shared/components/change-password-model/change-password-model.component';
 
 @Component({
   selector: 'app-admin-home-page',
@@ -10,10 +12,33 @@ import { UserDataService } from '../../../../core/services/user-data.service';
 export class AdminHomePage implements OnInit {
   pointsTotalCount: any;
   filterType: string = 'all';
+  private modalService = inject(NgbModal);
   
 constructor (private http:HttpService,private userData:UserDataService){
-
+  debugger;
+// var loggedIdUser = this.userData.getUserData();
+//     if (loggedIdUser["IsConfirm"] == "False") {
+//       this.openChangePassword();
+//     }
 }
+
+ openChangePassword() {
+    const modalRef = this.modalService.open(ChangePasswordModelComponent, {
+      backdrop: 'static', // prevent closing on outside click
+      keyboard: false,    // prevent closing with ESC
+      centered: true,
+      size: 'md'          // responsive size
+    });
+
+    modalRef.result.then(
+      (result) => {
+        console.log('Password changed:', result);
+      },
+      (reason) => {
+        console.log('Modal dismissed:', reason);
+      }
+    );
+  }
 openPointDetails(item: any) {
   // optional: open modal or navigate — left empty so it won't change current logic
 }

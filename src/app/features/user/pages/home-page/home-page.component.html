@@ -1,9 +1,15 @@
+<div class="loading-overlay" *ngIf="isLoading">
+  <div class="loading-inner">
+    <img src="assets/images/shared/blueSpinner2.gif" alt="loading" class="loading-gif" />
+  </div>
+</div>
+
 <div class="container-fluid p-0 user-container" dir="rtl">
   <app-user-navbar></app-user-navbar>
 
   <div *ngIf="isGather" class="page-wrapper">
     <div class="page-header container my-4">
-      <h5 class="page-title">{{ pageTitle }}</h5>
+      <h5 class="page-title">{{ pageTitle }} - {{pageName}}</h5>
 
       <div class="header-actions">
         <button class="btn btn-add mb-3" (click)="open(uploadModal)">رفع ملف</button>
@@ -14,6 +20,7 @@
     <div class="container px-0">
       <div class="table-responsive voters-table-wrapper">
         <div class="d-flex justify-content-between align-items-center mb-2">
+          
           <input type="text" class="form-control me-2" placeholder="ابحث بالاسم، الرقم القومي، الهاتف..."
             [(ngModel)]="searchTerm" (ngModelChange)="onSearchChange()" />
         </div>
@@ -23,11 +30,11 @@
               <th scope="col">الأسم</th>
               <th scope="col">الرقم القومى</th>
               <th scope="col">رقم الهاتف</th>
-              <th scope="col">العنوان</th>
-
-              <th scope="col">السن</th>
-
-              <th scope="col" class="actions-col">الإجراءات</th>
+              <th scope="col">المقر الأنتخابى</th>
+              <th scope="col">رقم اللجنة</th>
+              <th scope="col">رقم الكشف</th>
+              <th scope="col">الحالة</th>
+              
             </tr>
           </thead>
           <tbody>
@@ -35,16 +42,19 @@
               <td class="align-middle">{{ item.fullName }}</td>
               <td class="align-middle">{{ item.nationalId }}</td>
               <td class="align-middle">{{ item.phone }}</td>
-              <td class="align-middle">{{ item.address }}</td>
+              <td class="align-middle">{{ item.schoolName }}</td>
+              <td class="align-middle">{{ item.committeNo }}</td>
+              <td class="align-middle">{{ item.inspectionNo }}</td>
+              <td class="align-middle">{{ item.status }}</td>
 
-              <td class="align-middle">{{ item.age }}</td>
 
-              <td class="align-middle text-center">
+
+              <!-- <td class="align-middle text-center">
                 <div class="action-buttons">
                   <button class="btn btn-sm btn-edit" (click)="open(edit)">تعديل</button>
                   <button class="btn btn-sm btn-delete" (click)="open(delete)">حذف</button>
                 </div>
-              </td>
+              </td> -->
             </tr>
           </tbody>
         </table>
@@ -77,12 +87,12 @@
     <div class="modal-body">
       <form [formGroup]="addForm" class="add-form">
         <div class="row g-2">
-          <div class="col-12" style="direction: rtl;">
+          <!-- <div class="col-12" style="direction: rtl;">
             <label class="form-label">اسم الناخب بالكامل</label>
             <input type="text" formControlName="fullname" class="form-control" placeholder="ادخل اسم الناخب بالكامل" />
             <div *ngIf="addForm.get('fullname')?.invalid && addForm.get('fullname')?.touched" class="text-danger mt-1">
               يجب ادخال اسم الناخب بالكامل </div>
-          </div>
+          </div> -->
 
           <div class="col-12" style="direction: rtl;">
             <label class="form-label">الرقم القومى</label>
@@ -98,15 +108,15 @@
               ادخال رقم الموبايل </div>
           </div>
 
-          <div class="col-12" style="direction: rtl;">
+          <!-- <div class="col-12" style="direction: rtl;">
             <label class="form-label">العنوان</label>
             <input type="text" formControlName="address" class="form-control" placeholder="ادخل العنوان" />
-          </div>
+          </div> -->
 
-          <div class="col-12" style="direction: rtl;">
+          <!-- <div class="col-12" style="direction: rtl;">
             <label class="form-label">تاريخ الميلاد</label>
             <input type="date" class="form-control" formControlName="birthDate" placeholder="yyyy-mm-dd" />
-          </div>
+          </div> -->
         </div>
       </form>
     </div>

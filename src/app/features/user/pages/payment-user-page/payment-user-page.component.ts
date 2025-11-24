@@ -5,6 +5,7 @@ import { HttpService } from '../../../../core/services/http.service';
 import { UserDataService } from '../../../../core/services/user-data.service';
 import { FailedModalComponent } from '../../../../shared/components/failed-modal/failed-modal.component';
 import { Voter } from '../../../admin/interfaces/admin.interfaces';
+import { ChangePasswordModelComponent } from '../../../../shared/components/change-password-model/change-password-model.component';
 
 @Component({
   selector: 'app-payment-user-page',
@@ -18,19 +19,43 @@ export class PaymentUserPageComponent implements OnInit {
   private modalService = inject(NgbModal);
   closeResult: WritableSignal<string> = signal('');
   pageTitle: string = "";
-  mainVoters: Voter[]=[];
-   searchTerm: string = '';
+  mainVoters: Voter[] = [];
+  searchTerm: string = '';
+  pageName: string = '';
 
-  voters: Voter[]=[];
+  voters: Voter[] = [];
   addForm!: FormGroup;
   model!: NgbDateStruct;
 
   constructor(private userDataService: UserDataService, private http: HttpService, private _formbuilder: FormBuilder) {
 
+    var loggedIdUser = this.userDataService.getUserData();
+    if (loggedIdUser["IsConfirm"] == "false") {
+      this.openChangePassword();
+    }
 
     this.intlizeForm();
 
 
+
+  }
+
+  openChangePassword() {
+    const modalRef = this.modalService.open(ChangePasswordModelComponent, {
+      backdrop: 'static', // prevent closing on outside click
+      keyboard: false,    // prevent closing with ESC
+      centered: true,
+      size: 'md'          // responsive size
+    });
+
+    modalRef.result.then(
+      (result) => {
+        console.log('Password changed:', result);
+      },
+      (reason) => {
+        console.log('Modal dismissed:', reason);
+      }
+    );
   }
 
   onSearchChange() {
@@ -43,7 +68,7 @@ export class PaymentUserPageComponent implements OnInit {
     }
   }
 
-  
+
   ngOnInit(): void {
     debugger;
     if (this.userDataService.getUserRoles().includes("Payment")) {
@@ -58,9 +83,9 @@ export class PaymentUserPageComponent implements OnInit {
       }
 
     }
-   
+
   }
- 
+
 
   GetAllVoterByOption(operationId: number, operationType: number) {
     debugger;
@@ -71,6 +96,7 @@ export class PaymentUserPageComponent implements OnInit {
     this.http.post(`Voter/get-all-by-Option`, payload).subscribe(
       (res: any) => {
         this.mainVoters = res.voters
+        this.pageName = res.title;
         this.refreshCountries();
       });
   }
@@ -115,20 +141,20 @@ export class PaymentUserPageComponent implements OnInit {
     debugger;
     let payload = {
       voterNationalId: this.addForm.value.nationalId,
-      status:4
+      status: 4
 
     }
 
     this.http.put(`Voter/update-voter-trip`, payload).subscribe(
       (res: any) => {
-     
+
         if (res?.code == '200' && res?.isSuccess) {
-           if (this.userDataService.getUserRoles().includes("Super")) {
+
           this.GetAllVoterByOption(this.userDataService.getUserData()['PaymentId'], 3)
           this.refreshCountries();
 
-        }
-        this.modalService.dismissAll();
+
+          this.modalService.dismissAll();
         } else {
           const modalRef = this.modalService.open(FailedModalComponent, {
             modalDialogClass: 'filter-modal',

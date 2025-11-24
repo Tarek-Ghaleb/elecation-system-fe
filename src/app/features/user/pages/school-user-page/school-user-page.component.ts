@@ -4,6 +4,7 @@ import { NgbModal, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { HttpService } from '../../../../core/services/http.service';
 import { UserDataService } from '../../../../core/services/user-data.service';
 import { FailedModalComponent } from '../../../../shared/components/failed-modal/failed-modal.component';
+import { Voter } from '../../../admin/interfaces/admin.interfaces';
 
 @Component({
   selector: 'app-school-user-page',
@@ -17,12 +18,14 @@ export class SchoolUserPageComponent implements OnInit {
   private modalService = inject(NgbModal);
   closeResult: WritableSignal<string> = signal('');
   pageTitle: string = "";
-  mainVoters: any;
+  mainVoters: Voter[]=[];
+  pageName:string='';
 
-  voters: any;
+  voters: Voter[]=[];
   addForm!: FormGroup;
   model!: NgbDateStruct;
   searchTerm: string = '';
+  isLoading: boolean=false;
 
   constructor(private userDataService: UserDataService, private http: HttpService, private _formbuilder: FormBuilder) {
 
@@ -55,9 +58,12 @@ export class SchoolUserPageComponent implements OnInit {
       operationType: operationType,
       operationId: Number(operationId)
     };
+    this.isLoading=true;
     this.http.post(`Voter/get-all-by-Option`, payload).subscribe(
       (res: any) => {
+        this.isLoading=false;
         this.mainVoters = res.voters
+        this.pageName=res.title;
         this.refreshCountries();
       });
   }
@@ -116,6 +122,7 @@ export class SchoolUserPageComponent implements OnInit {
 
           }
           this.modalService.dismissAll();
+          this.addForm.reset();
         } else {
           const modalRef = this.modalService.open(FailedModalComponent, {
             modalDialogClass: 'filter-modal',

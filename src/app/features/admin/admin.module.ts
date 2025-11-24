@@ -15,6 +15,9 @@ import { UsersListPageComponent } from './pages/users-list-page/users-list-page.
 import { RegionPageComponent } from './pages/region-page/region-page.component';
 import { AuthGuard } from '../../core/guards/auth-guard';
 import { RoleGuard } from '../../core/guards/role-guard';
+import { ElecationSourceDataPageComponent } from './pages/elecation-source-data-page/elecation-source-data-page.component';
+import { GatherSourceDataPageComponent } from './pages/gather-source-data-page/gather-source-data-page.component';
+
 
 const routes: Routes = [
   {
@@ -32,6 +35,18 @@ const routes: Routes = [
   {
     path: 'pay-points',
     component: PayPointsPageComponent,
+     canActivate: [AuthGuard, RoleGuard],
+    data: { allowedRoles: ['OperationAdmin'] },
+  },
+  {
+    path: 'source-data',
+    component: ElecationSourceDataPageComponent,
+     canActivate: [AuthGuard, RoleGuard],
+    data: { allowedRoles: ['OperationAdmin'] },
+  },
+   {
+    path: 'active-gather-data',
+    component: GatherSourceDataPageComponent,
      canActivate: [AuthGuard, RoleGuard],
     data: { allowedRoles: ['OperationAdmin'] },
   },
@@ -57,7 +72,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [AdminHomePage, SchoolsPageComponent, PayPointsPageComponent, MainPointsPageComponent, UsersListPageComponent,RegionPageComponent],
+  declarations: [AdminHomePage, SchoolsPageComponent, PayPointsPageComponent, MainPointsPageComponent, UsersListPageComponent,RegionPageComponent,ElecationSourceDataPageComponent,GatherSourceDataPageComponent],
   imports: [
     CommonModule,
     RouterModule,

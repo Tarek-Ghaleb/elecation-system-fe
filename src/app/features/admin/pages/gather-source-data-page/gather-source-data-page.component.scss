@@ -1,0 +1,143 @@
+.btn-add{
+    background-color: #062F6D;
+    color: #FFF;
+    padding-right: 2rem;
+    padding-left: 2rem;
+    padding-top: .5rem;
+    padding-bottom: .5rem;
+    border: none;
+    border-radius: 8px;
+}
+.btn-edit{
+    background-color: #FFA500;
+    color: #FFF;
+    padding-right: 2rem;
+    padding-left: 2rem;
+    padding-top: .5rem;
+    padding-bottom: .5rem;
+    border: none;
+    border-radius: 8px;
+}
+.btn-delete{
+    background-color: #D32F2F;
+    color: #FFF;
+    padding-right: 2rem;
+    padding-left: 2rem;
+    padding-top: .5rem;
+    padding-bottom: .5rem;
+    border: none;
+    border-radius: 8px;
+}
+th{
+    text-align: center;
+    background-color: #FFF;
+    color: #000;
+    font-size: 16px;
+    font-weight: bold;
+}
+td{
+    text-align: center;
+    background-color: #FFF;
+    color: #000;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+
+.upload-zone-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: .75rem;
+  align-items: stretch;
+  width: 100%;
+}
+
+.upload-zone {
+  border: 2px dashed #d9e3f7;
+  border-radius: 12px;
+  padding: 1.6rem;
+  min-height: 160px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color .12s ease, border-color .12s ease;
+  text-align: center;
+  background: linear-gradient(180deg, rgba(6,47,109,0.02), rgba(6,47,109,0.01));
+
+  &:hover {
+    background-color: rgba(6,47,109,0.03);
+    border-color: rgba(6,47,109,0.18);
+  }
+
+  .plus-circle {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: #062f6d;
+    color: #fff;
+    font-size: 40px;
+    line-height: 72px;
+    text-align: center;
+    box-shadow: 0 6px 18px rgba(6,47,109,0.12);
+    margin-bottom: 0.6rem;
+    user-select: none;
+  }
+
+  .upload-hint {
+    font-size: 0.95rem;
+    color: #495057;
+  }
+}
+
+.selected-file {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.5rem;
+  border-radius: 8px;
+  background: #f8f9fa;
+  font-weight: 600;
+
+  .file-name {
+    max-width: 60%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  svg { color: #062f6d; }
+}
+
+/* small screens */
+@media (max-width: 576px) {
+  .upload-zone { min-height: 130px; .plus-circle { width: 60px; height: 60px; font-size: 34px; } }
+}
+
+/* overlay يغطي الشاشة المحتوى (ممكن تضبط z-index إذا لزم) */
+.loading-overlay {
+  position: fixed;      /* ثابت بالنسبة للنافذة */
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(255,255,255,0.6); /* نصف شفاف - غيّره لو تريد مظلم */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;        /* تأكد أنه أعلى من المودال والسايدبار */
+}
+
+/* صندوق داخلي يمكن استخدامه لوضع حدود/ظل */
+.loading-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* GIF - غيّر الحجم كما تريد */
+.loading-gif {
+  width: 80px;
+  height: 80px;
+}

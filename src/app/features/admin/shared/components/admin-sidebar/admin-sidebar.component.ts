@@ -16,6 +16,9 @@ export class AdminSidebarComponent {
     'admin/pay-points',
     'admin/schools',
     'admin/areas',
+    'admin/source-data',
+    'admin/active-gather-data'
+
 
   ];
 
@@ -100,6 +103,7 @@ export class AdminSidebarComponent {
     logout() {
     localStorage.removeItem('User');
     localStorage.removeItem('UserName');
+    localStorage.clear();
     this.router.navigate(['']);
   }
 }

@@ -32,6 +32,7 @@ export class UserNavbarComponent {
       logout() {
     localStorage.removeItem('User');
     localStorage.removeItem('UserName');
+    localStorage.clear();
     this.router.navigate(['']);
   }
 }

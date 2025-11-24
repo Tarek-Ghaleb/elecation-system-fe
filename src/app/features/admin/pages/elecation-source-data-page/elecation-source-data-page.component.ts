@@ -1,22 +1,22 @@
 import { Component, ElementRef, inject, OnInit, signal, TemplateRef, ViewChild, WritableSignal } from '@angular/core';
-import { UserDataService } from '../../../../core/services/user-data.service';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { NgbDateStruct, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Subject } from 'rxjs';
 import { HttpService } from '../../../../core/services/http.service';
-import { NgbDateStruct, NgbModal, NgbDatepickerModule, NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
-
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { FailedModalComponent } from '../../../../shared/components/failed-modal/failed-modal.component';
-import { ExportExcelDTO, Voter } from '../../../admin/interfaces/admin.interfaces';
+import { UserDataService } from '../../../../core/services/user-data.service';
+import { ExportExcelDTO, GeatherPoint, SourceData, Voter } from '../../interfaces/admin.interfaces';
 import { ExportToExcelService } from '../../../../core/services/export-to-excel.service';
+import { FailedModalComponent } from '../../../../shared/components/failed-modal/failed-modal.component';
 
 @Component({
-  selector: 'app-home-page',
-  templateUrl: './home-page.component.html',
-  styleUrl: './home-page.component.scss'
+  selector: 'app-elecation-source-data-page',
+  templateUrl: './elecation-source-data-page.component.html',
+  styleUrl: './elecation-source-data-page.component.scss'
 })
-export class HomePageComponent implements OnInit {
-  isLoading:boolean =false;
+export class ElecationSourceDataPageComponent implements OnInit {
   page = 1;
   pageSize = 10;
+  isLoading:boolean =false;
   isGather: boolean = false;
   selectedFile: File | null = null;
   selectedFileName: string | null = null;
@@ -26,20 +26,22 @@ export class HomePageComponent implements OnInit {
   private modalService = inject(NgbModal);
   closeResult: WritableSignal<string> = signal('');
   pageTitle: string = "";
-  mainVoters: Voter[]=[];
+  MainData: SourceData[]=[];
   excelErrors: ExportExcelDTO[]=[];
   pageName: string="";
 
   searchTerm: string = '';
 
-  voters: Voter[]=[];
+  data: SourceData[]=[];
   addForm!: FormGroup;
   model!: NgbDateStruct;
+  showUploadBtn:boolean=false;
 
   constructor(private userDataService: UserDataService, private http: HttpService, private _formbuilder: FormBuilder,private excelService:ExportToExcelService) {
 
 
     this.intlizeForm();
+    
 
 
   }
@@ -54,15 +56,15 @@ export class HomePageComponent implements OnInit {
   }
 
   // filter mainVoters
-  const filtered = this.mainVoters.filter(v =>
-    v.fullName?.toLowerCase().includes(term) ||
+  const filtered = this.MainData.filter(v =>
+    v.name?.toLowerCase().includes(term) ||
     v.nationalId?.toLowerCase().includes(term) ||
-    v.phone?.toLowerCase().includes(term) ||
-    v.address?.toLowerCase().includes(term)
+    v.schoolName?.toLowerCase().includes(term) ||
+    v.schoolAddress?.toLowerCase().includes(term)
   );
 
   // update paged voters
-  this.voters = filtered.slice(0, this.pageSize);
+  this.data = filtered.slice(0, this.pageSize);
   this.page = 1; // reset page to 1
 }
 
@@ -78,23 +80,16 @@ async submitUpload(modalRef?: any) {
     debugger;
     const fd = new FormData();
     fd.append('file', this.selectedFile, this.selectedFile.name);
-
-     this.http.post(`Voter/upload-voter`, fd).subscribe(
+this.isLoading=true
+     this.http.post(`SourceData/upload`, fd).subscribe(
       (res: any) => {
         debugger;
+        this.isLoading=false;
         this.excelErrors=res.excelErrors;
         if(this.excelErrors.length > 0)
           this.exportErrorData();
-         this.GetAllVoterByOption(this.userDataService.getUserData()['GatherPointId'], 1);
+         
       });
-
-    // Replace the following with your actual upload method:
-    // await this.myService.uploadExcel(fd).toPromise();
-
-    // For now just simulate success:
-    // await new Promise(res => setTimeout(res, 800));
-
-    // On success:
     this.selectedFile = null;
     this.selectedFileName = null;
     this.uploadError = null;
@@ -134,19 +129,8 @@ async submitUpload(modalRef?: any) {
 
 
   ngOnInit(): void {
-    if (this.userDataService.getUserRoles().includes("Gather")) {
-      this.isGather = true;
-      if (this.userDataService.getUserRoles().includes("Super")) {
-        this.pageTitle = "مدير نقطة حشد";
-        this.GetAllVoterByOption(this.userDataService.getUserData()['GatherPointId'], 1);
-      }
-      else {
-        this.pageTitle = "مسئول حشد"
-
-      }
-
-    }
-
+    
+this.GetAllSourceData();
   }
 
   onFileSelected(event: Event) {
@@ -177,7 +161,7 @@ async submitUpload(modalRef?: any) {
   }
 
   // optionally: size limit, e.g., 5MB
-  const maxSize = 5 * 1024 * 1024;
+  const maxSize = 10 * 1024 * 1024;
   if (file.size > maxSize) {
     this.uploadError = 'حجم الملف كبير جدًا. الحد الأقصى 5 ميجابايت.';
     this.selectedFile = null;
@@ -199,16 +183,14 @@ clearFile() {
 }
 
 
-  GetAllVoterByOption(operationId: number, operationType: number) {
-    this.isLoading=true;
-    let payload = {
-      operationType: operationType,
-      operationId: Number(operationId)
-    };
-    this.http.post(`Voter/get-all-by-Option`, payload).subscribe(
+  GetAllSourceData() {
+    
+   this.isLoading=true;
+    this.http.get(`SourceData/get-all-data`).subscribe(
       (res: any) => {
+        debugger;
         this.isLoading=false;
-        this.mainVoters = res.voters
+        this.MainData = res.sourceData
         this.pageName=res.title;
         this.refreshCountries();
       });
@@ -216,7 +198,7 @@ clearFile() {
 
   refreshCountries() {
     const start = (this.page - 1) * this.pageSize;
-    this.voters = this.mainVoters.slice(start, start + this.pageSize);
+    this.data = this.MainData.slice(start, start + this.pageSize);
   }
 
 
@@ -252,45 +234,6 @@ clearFile() {
     console.log(`Delete point with ID: ${pointId}`);
   }
 
-  submitEdit() { }
-
-  submitDelete() { }
-
-  submitAdd() {
-    debugger;
-    let payload = {
-      // fullName: this.addForm.value.fullname,
-      nationalId: this.addForm.value.nationalId,
-      phone: this.addForm.value.phone,
-      gatherId:this.userDataService.getUserData()['GatherPointId'],
-      // birthDate: this.addForm.value.birthDate,
-      // address: this.addForm.value.address
-
-
-    }
-
-    this.http.post(`Voter/add-new-voter-nationalid`, payload).subscribe(
-      (res: any) => {
-        // this.GetAllGatherPoints(Number(this.userDataService.getUserAreaId()))
-        if (res?.code == '200' && res?.isSuccess) {
-          if (this.userDataService.getUserRoles().includes("Super")) {
-            this.GetAllVoterByOption(this.userDataService.getUserData()['GatherPointId'], 1)
-            this.refreshCountries();
-
-          }
-          this.modalService.dismissAll();
-          this.addForm.reset();
-        } else {
-          const modalRef = this.modalService.open(FailedModalComponent, {
-            modalDialogClass: 'filter-modal',
-            backdrop: false,
-          });
-          modalRef.componentInstance.failedMsg = res?.message;
-        }
-
-      });
-
-  }
 
 
   open(content: TemplateRef<any>) {
@@ -304,7 +247,7 @@ clearFile() {
     );
   }
   getDismissReason(reason: any) {
-    this.addForm.reset();
+    throw new Error('Method not implemented.');
   }
   toggleStatus(point: any) {
 

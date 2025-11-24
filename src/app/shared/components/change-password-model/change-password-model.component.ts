@@ -1,18 +1,20 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthHttpService } from '../services/auth-http.service';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { AuthHttpService } from '../../../features/auth/pages/services/auth-http.service';
 import { Router } from '@angular/router';
-import { FailedModalComponent } from '../../../../shared/components/failed-modal/failed-modal.component';
 import { TranslateService } from '@ngx-translate/core';
-import { UserDataService } from '../../../../core/services/user-data.service';
+import { UserDataService } from '../../../core/services/user-data.service';
+import { FailedModalComponent } from '../failed-modal/failed-modal.component';
+import { HttpService } from '../../../core/services/http.service';
 
 @Component({
-  selector: 'app-login-page',
-  templateUrl: './login-page.component.html',
-  styleUrl: './login-page.component.scss',
+  selector: 'app-change-password-model',
+
+  templateUrl: './change-password-model.component.html',
+  styleUrl: './change-password-model.component.scss'
 })
-export class LoginPageComponent {
+export class ChangePasswordModelComponent {
   lang: any = localStorage.getItem('language');
   loginForm!: FormGroup;
   passwordPattern =
@@ -21,7 +23,7 @@ export class LoginPageComponent {
 
   constructor(
     public formbuilder: FormBuilder,
-    private http: AuthHttpService,
+    private http: HttpService,
     private modalService: NgbModal,
     private router: Router,
     private translate: TranslateService,
@@ -29,6 +31,7 @@ export class LoginPageComponent {
   ) { }
 
   ngOnInit() {
+    debugger;
     this.buildLoginFormGroup();
   }
 
@@ -51,8 +54,8 @@ export class LoginPageComponent {
 
   buildLoginFormGroup() {
     this.loginForm = this.formbuilder.group({
-      userName: [null, [Validators.required]],
-      password: [
+      newPassword: [null, [Validators.required, Validators.pattern(this.passwordPattern)]],
+      confirmPassword: [
         null,
         [Validators.required, Validators.pattern(this.passwordPattern)],
       ],
@@ -64,34 +67,26 @@ export class LoginPageComponent {
   }
 
   submitLoginForm() {
-
+debugger;
     this.submitLoader = true;
     let model = {
-      userName: this.loginForm.controls['userName'].value,
-      password: this.loginForm.controls['password'].value,
+      newPassword: this.loginForm.controls['newPassword'].value,
+      confirmPassword: this.loginForm.controls['confirmPassword'].value,
     };
-    this.http.submitLoginAPI(model).subscribe(
-      (res) => {
+    this.http.post(`Account/update-password`, model).subscribe(
+      (res:any) => {
         this.submitLoader = false;
-        debugger;
+        debugger;   
         if (res?.code == '200' && res?.isSuccess) {
           localStorage.setItem('User', res?.token);
-
-          var user = this.userData.getUserData();
-
-          if (user["IsConfirm"] == "False")
-            this.router.navigate(['change-password']);
-
-          else {
-            if (this.userData.getUserRoles()?.includes('Admin'))
-              this.router.navigate(['admin/home']);
-            else if (this.userData.getUserRoles()?.includes('Gather'))
-              this.router.navigate(['user']);
-            else if (this.userData.getUserRoles()?.includes('School'))
-              this.router.navigate(['user/schoolUser']);
-            else if (this.userData.getUserRoles()?.includes('Payment'))
-              this.router.navigate(['user/paymentUser']);
-          }
+          if (this.userData.getUserRoles()?.includes('Admin'))
+            this.router.navigate(['admin/home']);
+          else if (this.userData.getUserRoles()?.includes('Gather'))
+            this.router.navigate(['user']);
+          else if (this.userData.getUserRoles()?.includes('School'))
+            this.router.navigate(['user/schoolUser']);
+          else if (this.userData.getUserRoles()?.includes('Payment'))
+            this.router.navigate(['user/paymentUser']);
 
         } else {
           const modalRef = this.modalService.open(FailedModalComponent, {
@@ -100,9 +95,8 @@ export class LoginPageComponent {
           });
           modalRef.componentInstance.failedMsg = res?.message;
         }
-
       },
-      (err) => {
+      (err:any) => {
         this.submitLoader = false;
         const modalRef = this.modalService.open(FailedModalComponent, {
           modalDialogClass: 'filter-modal',

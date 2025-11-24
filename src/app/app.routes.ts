@@ -5,6 +5,7 @@ import { UnauthorizedPageComponent } from './shared/components/unauthorized-page
 import { AuthGuard } from './core/guards/auth-guard';
 import { RoleGuard } from './core/guards/role-guard';
 import { AdminHomePage } from './features/admin/pages/admin-home-page/admin-home-page';
+import { ChangePasswordModelComponent } from './shared/components/change-password-model/change-password-model.component';
 
 export const routes: Routes = [
   {
@@ -24,6 +25,14 @@ export const routes: Routes = [
   {
     path: '',
     component: LoginPageComponent,
+    loadChildren: () =>
+      import('./features/auth/auth.module').then((m) => m.AuthModule),
+  },
+    {
+    path: 'change-password',
+    component: ChangePasswordModelComponent,
+        canActivate: [AuthGuard, RoleGuard],
+    data: { allowedRoles: ['Admin', 'OperationAdmin','GatherSupervisor','GatherAgent','SchoolSupervisor','SchoolAgent','PaymentSupervisor','PaymentAgent'] },
     loadChildren: () =>
       import('./features/auth/auth.module').then((m) => m.AuthModule),
   },

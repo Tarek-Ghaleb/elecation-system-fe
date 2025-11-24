@@ -1,0 +1,120 @@
+<div class="loading-overlay" *ngIf="isLoading">
+  <div class="loading-inner">
+    <img src="assets/images/shared/blueSpinner2.gif" alt="loading" class="loading-gif" />
+  </div>
+</div>
+
+<div class="d-flex flex-row">
+  <div style="width: 20%">
+    <app-admin-sidebar></app-admin-sidebar>
+  </div>
+  <div style="width: 80%" class="mt-5 mx-1">
+    <div class="d-flex flex-row justify-content-end">
+      <button class="btn btn-add mb-3" (click)="open(uploadModal)">رفع اسطوانة الناخبين</button>
+    </div>
+    <div class="d-flex justify-content-between align-items-center mb-2">
+          
+          <input type="text" class="form-control me-2" placeholder="ابحث بالاسم، الرقم القومي، الهاتف..."
+            [(ngModel)]="searchTerm" (ngModelChange)="onSearchChange()" />
+        </div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">الأسم</th>
+          <th scope="col">الرقم القومى</th>
+          <th scope="col">المقر الأنتخابى</th>
+          <th scope="col">عنوان المقر الأنتخابى</th>
+
+          <th scope="col">رقم اللجنة</th>
+          <th scope="col"> رقم الكشف</th>
+
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of data">
+          <td class="text-center">{{ item.name }}</td>
+          <td class="text-center">{{ item.nationalId }}</td>
+          <td class="text-center">{{ item.schoolName }}</td>
+          <td class="text-center">{{ item.schoolAddress }}</td>
+          <td class="text-center">{{ item.committeNo }}</td>
+          <td class="text-center">{{ item.inspectionNo }}</td>
+
+
+          
+        </tr>
+      </tbody>
+    </table>
+      <div class="d-flex align-items-center justify-content-between mt-3 pagination-row">
+        <ngb-pagination
+          [collectionSize]="MainData.length"
+          [(page)]="page"
+          [pageSize]="pageSize"
+          [maxSize]="10"
+          [rotate]="true"
+          [ellipses]="true"
+          [boundaryLinks]="true"
+          (pageChange)="refreshCountries()"
+        >
+        </ngb-pagination>
+
+        <div class="d-flex align-items-center gap-2">
+          <label class="mb-0 me-2">عرض</label>
+          <select
+            class="form-select page-size-select"
+            [(ngModel)]="pageSize"
+            (ngModelChange)="refreshCountries()"
+          >
+            <option [ngValue]="2">2 عناصر في الصفحة</option>
+            <option [ngValue]="4">4 عناصر في الصفحة</option>
+            <option [ngValue]="6">6 عناصر في الصفحة</option>
+            <option [ngValue]="10">10 عناصر في الصفحة</option>
+            <option [ngValue]="20">20 عناصر في الصفحة</option>
+
+          </select>
+        </div>
+      </div>
+  </div>
+</div>
+
+
+  <!-- UPLOAD Modal -->
+  <ng-template #uploadModal let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title">رفع ملف إكسل</h4>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+
+    <div class="modal-body">
+      <div class="upload-zone-wrapper">
+        <div class="upload-zone" (click)="triggerFileInput()" role="button" tabindex="0"
+          (keydown.enter)="triggerFileInput()" (keydown.space)="triggerFileInput()">
+          <div class="plus-circle">+</div>
+          <div class="upload-hint">اضغط + أو اسحب الملف هنا (ملفات Excel فقط)</div>
+        </div>
+
+        <input #uploadInput type="file"
+          accept=".xlsx,.xls,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel"
+          (change)="onFileSelected($event)" style="display: none;" />
+
+        <div class="selected-file" *ngIf="selectedFileName">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark"
+            viewBox="0 0 16 16">
+            <path d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5L14 4.5z" />
+            <path d="M10.5 1v3a1 1 0 0 0 1 1h3" />
+          </svg>
+          <span class="file-name">{{ selectedFileName }}</span>
+          <button class="btn btn-sm btn-link text-danger ms-2" (click)="clearFile()">إزالة</button>
+        </div>
+
+        <div class="text-danger mt-2" *ngIf="uploadError">{{ uploadError }}</div>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss()">إلغاء</button>
+      <button type="button" class="btn btn-primary" [disabled]="!selectedFile"
+        (click)="submitUpload(modal)">رفع</button>
+    </div>
+  </ng-template>
+
+
